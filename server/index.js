@@ -1,13 +1,12 @@
 /* eslint-disable no-console */
+const Glue = require('glue');
 
-const Hapi = require('hapi');
-const Blipp = require('blipp');
-
-// Create a server with a host and port
-const server = Hapi.server(require('../config'));
+const manifest = require('./manifest');
 
 (async() => {
-  await server.register(Blipp);
+  const server = await Glue.compose(manifest, { relativeTo: __dirname });
+  await server.initialize();
+
   server.route({
     method: 'GET',
     path: '/hello',

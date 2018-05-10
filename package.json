@@ -4,11 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "clear && NODE_ENV=dev nodemon server",
+    "dev": "NODE_ENV=development nodemon server",
+    "start": "NODE_ENV=production nodemon server",
     "lint": "eslint ."
   },
   "dependencies": {
     "blipp": "^3.0.0",
+    "glue": "^5.0.0",
     "hapi": "^17.4.0"
   },
   "devDependencies": {
