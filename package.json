@@ -4,10 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "NODE_END=dev nodemon server",
+    "dev": "clear && NODE_END=dev nodemon server",
     "lint": "eslint ."
   },
   "dependencies": {
+    "blipp": "^3.0.0",
     "hapi": "^17.4.0"
   },
   "devDependencies": {
