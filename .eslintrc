@@ -1,0 +1,21 @@
+{
+  "extends": "airbnb",
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "modules"
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true
+  },
+  "rules": {
+    "arrow-parens": "warn",
+    "comma-dangle": ["warn", "always-multiline"],
+    "no-debugger": "off",
+    "no-unused-vars": "warn",
+    "quotes": ["warn", "single"],
+    "semi": "warn",
+    "space-before-function-paren": ["warn", "never"]
+  }
+}
