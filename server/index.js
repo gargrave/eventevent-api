@@ -4,10 +4,7 @@ const Hapi = require('hapi');
 const Blipp = require('blipp');
 
 // Create a server with a host and port
-const server = Hapi.server({
-  host: 'localhost',
-  port: 3001,
-});
+const server = Hapi.server(require('../config'));
 
 (async() => {
   await server.register(Blipp);
