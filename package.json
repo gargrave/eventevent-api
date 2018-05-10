@@ -11,7 +11,8 @@
   "dependencies": {
     "blipp": "^3.0.0",
     "glue": "^5.0.0",
-    "hapi": "^17.4.0"
+    "hapi": "^17.4.0",
+    "lodash": "^4.17.10"
   },
   "devDependencies": {
     "eslint": "^4.9.0",

@@ -6,9 +6,7 @@ const config = {
     },
   },
   register: {
-    plugins: [
-      'blipp',
-    ],
+    plugins: [],
   },
 };
 

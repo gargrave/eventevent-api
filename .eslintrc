@@ -2,7 +2,7 @@
   "extends": "airbnb",
   "parserOptions": {
     "ecmaVersion": 2017,
-    "sourceType": "modules"
+    "sourceType": "module"
   },
   "env": {
     "es6": true,
