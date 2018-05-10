@@ -1,0 +1,15 @@
+{
+  "name": "eventevent-api",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "NODE_END=dev nodemon server"
+  },
+  "dependencies": {
+    "hapi": "^17.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.4"
+  }
+}
