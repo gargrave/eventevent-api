@@ -12,6 +12,7 @@
   "rules": {
     "arrow-parens": "warn",
     "comma-dangle": ["warn", "always-multiline"],
+    "function-paren-newline": ["warn", "consistent"],
     "import/newline-after-import": "off",
     "no-debugger": "off",
     "no-unused-vars": "warn",
