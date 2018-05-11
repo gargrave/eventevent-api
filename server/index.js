@@ -4,6 +4,8 @@ const Glue = require('glue');
 const manifest = require('./manifest');
 const routes = require('../api/routes');
 
+const knex = require('../db');
+
 const API_ROOT = '../api';
 
 exports.startServer = async(startNow) => {

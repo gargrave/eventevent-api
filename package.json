@@ -8,14 +8,17 @@
     "start": "NODE_ENV=production nodemon server",
     "test": "lab ./test/setup.js ./test/api",
     "lint": "eslint .",
-    "routes": "node scripts/printRoutes.js"
+    "routes": "node scripts/printRoutes.js",
+    "db:makemigration": "node scripts/db/makeMigration"
   },
   "dependencies": {
     "blipp": "^3.0.0",
     "chalk": "^2.4.1",
     "glue": "^5.0.0",
     "hapi": "^17.4.0",
-    "lodash": "^4.17.10"
+    "knex": "^0.14.6",
+    "lodash": "^4.17.10",
+    "pg": "^7.4.3"
   },
   "devDependencies": {
     "axios": "^0.18.0",
