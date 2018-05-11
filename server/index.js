@@ -2,18 +2,14 @@
 const Glue = require('glue');
 
 const manifest = require('./manifest');
+const routes = require('../api/routes');
+
+const API_ROOT = '../api';
 
 exports.startServer = async(startNow) => {
   const server = await Glue.compose(manifest, { relativeTo: __dirname });
   await server.initialize();
-
-  server.route({
-    method: 'GET',
-    path: '/hello',
-    handler: (request, h) => (
-      { data: { message: 'hello world' } }
-    ),
-  });
+  routes(API_ROOT).forEach(r => server.route(require(r))); // eslint-disable-line
 
   if (!startNow) {
     return server;

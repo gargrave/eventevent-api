@@ -7,10 +7,12 @@
     "dev": "NODE_ENV=development nodemon server",
     "start": "NODE_ENV=production nodemon server",
     "test": "lab ./test/setup.js ./test/api",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "routes": "node scripts/printRoutes.js"
   },
   "dependencies": {
     "blipp": "^3.0.0",
+    "chalk": "^2.4.1",
     "glue": "^5.0.0",
     "hapi": "^17.4.0",
     "lodash": "^4.17.10"
