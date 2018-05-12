@@ -19,6 +19,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "blipp": "^3.0.0",
     "boom": "^7.2.0",
     "chalk": "^2.4.1",
