@@ -3,11 +3,15 @@ const { apiUrl } = require('../../config');
 
 module.exports = {
   method: 'GET',
+
   path: apiUrl('/events'),
+
   handler: async() => {
-    const result = await listQuery('events');
+    const params = { table: 'events' };
+    const result = await listQuery(params);
     return { data: { events: result } };
   },
+
   options: {
     description: 'Events -> List',
   },
