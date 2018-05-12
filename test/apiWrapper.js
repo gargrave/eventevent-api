@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const BASE = 'http://localhost:3001';
+const BASE = 'http://localhost:3001/api/v1';
 
 module.exports = {
   async get(url) {
