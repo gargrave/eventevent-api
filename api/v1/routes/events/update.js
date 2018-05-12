@@ -24,6 +24,7 @@ module.exports = {
       }).code(400);
     }
 
+    // TODO: need to update the 'updated_at' field to NOW()
     const params = { id: request.params.id, payload, table: 'events' };
     const queryResult = await updateQuery(params);
     const { record, error } = queryResult;

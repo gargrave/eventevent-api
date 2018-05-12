@@ -19,7 +19,7 @@ describe('Api Route: GET Event -> Detail', () => {
     });
   });
 
-  it('should respond with a 400 if not object matches ID', async() => {
+  it('should respond with a 400 if no object matches ID', async() => {
     const res = await API.get(`${path}/9999999`);
     const { error } = res.data;
     expect(error).to.be.an.object();
