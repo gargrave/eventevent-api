@@ -3,13 +3,13 @@ const fs = require('fs');
 
 module.exports =
   () => {
-    const cwd = __dirname;
+    const routes = `${__dirname}/routes`;
     const dirs = fs
-      .readdirSync(cwd)
-      .filter(file => fs.lstatSync(`${cwd}/${file}`).isDirectory());
+      .readdirSync(routes)
+      .filter(file => fs.lstatSync(`${routes}/${file}`).isDirectory());
 
     return dirs.reduce((accum, val) => {
-      const dir = `${cwd}/${val}`;
+      const dir = `${routes}/${val}`;
       return accum.concat(
         fs.readdirSync(dir).map(d => `${dir}/${d}`)
       );

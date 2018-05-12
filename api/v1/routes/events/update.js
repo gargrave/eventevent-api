@@ -1,5 +1,5 @@
-const knex = require('../../../db');
-const { apiUrl } = require('../config');
+const knex = require('../../../../db');
+const { apiUrl } = require('../../config');
 
 module.exports = {
   method: ['PUT', 'PATCH'],
