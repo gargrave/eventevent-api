@@ -1,4 +1,11 @@
 /* eslint-disable no-console */
+const { verboseLog } = require('../utils/logger');
+const { isNotProd } = require('../utils/env');
+if (isNotProd()) {
+  verboseLog(`Loading local env. vars for: ${process.env.NODE_ENV}`);
+  const env = require('../env'); // eslint-disable-line
+}
+
 const Glue = require('glue');
 
 const manifest = require('./manifest');

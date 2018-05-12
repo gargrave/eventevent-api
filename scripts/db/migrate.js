@@ -1,5 +1,6 @@
+const env = require('../../env'); // eslint-disable-line
 const knex = require('../../db');
-const log = require('../../utils/logger').verboseLog;
+const { verboseLog } = require('../../utils/logger');
 
 const config = {
   directory: './db/migrations/',
@@ -8,11 +9,11 @@ const config = {
 
 knex.migrate.latest(config)
   .then(() => {
-    log('DB migration successful!');
+    verboseLog('DB migration successful!');
     process.exit(0);
   })
   .catch((err) => {
-    log(['DB migration error!', err]);
+    verboseLog(['DB migration error!', err]);
     process.exit(1);
   });
 

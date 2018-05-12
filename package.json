@@ -4,14 +4,19 @@
   "main": "server/index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon server",
-    "start": "NODE_ENV=production nodemon server",
-    "test": "lab ./test/setup.js ./test/api",
-    "lint": "eslint .",
-    "routes": "node scripts/printRoutes.js",
     "db:makemigration": "node scripts/db/makeMigration",
     "db:migrate:dev": "NODE_ENV=development node scripts/db/migrate",
-    "db:rollback:dev": "NODE_ENV=development node scripts/db/rollback"
+    "db:migrate:test": "NODE_ENV=test node scripts/db/migrate",
+    "db:reset:test": "NODE_ENV=test node scripts/db/reset",
+    "db:rollback:dev": "NODE_ENV=development node scripts/db/rollback",
+    "db:seed:dev": "NODE_ENV=development node scripts/db/seed",
+    "db:seed:test": "NODE_ENV=test node scripts/db/seed",
+    "dev": "NODE_ENV=development nodemon server",
+    "start": "NODE_ENV=production nodemon server",
+    "routes": "node scripts/printRoutes.js",
+    "pretest": "npm run db:reset:test && npm run db:migrate:test && npm run db:seed:test",
+    "test": "lab -I '__core-js_shared__' ./test/setup.js ./test/api",
+    "lint": "eslint ."
   },
   "dependencies": {
     "blipp": "^3.0.0",
@@ -30,6 +35,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
+    "faker": "^4.1.0",
     "lab": "^15.4.4",
     "nodemon": "^1.17.4"
   }

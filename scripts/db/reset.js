@@ -2,27 +2,26 @@
 A helper file to reset the databse by dropping ALL existing tables.
 Note that this is set to only be allowed to run in a test environment--for obvious reasons.
 */
-const knex = require('../../database/db');
-const DB = require('../../globals/constants').db;
-const log = require('../../globals/logger').verboseLog;
+const env = require('../../env'); // eslint-disable-line
+const knex = require('../../db');
+const tables = require('../../db/tables');
+const { verboseLog } = require('../../utils/logger');
 
 if (process.env.NODE_ENV === 'test') {
-  const allTables = [];
-  for (const table in DB) {
-    allTables.push(DB[table]);
-  }
-
+  // for (const table in tablse) {
+  //   allTables.push(tablse[table]);
+  // }
+  const allTables = Object.keys(tables).map(key => tables[key]);
   const dropQuery = `DROP TABLE IF EXISTS migrations, migrations_lock, ${allTables.join(', ')};`;
-
-  log('Dropping all tables to reset DB for tests...');
+  verboseLog('Dropping all tables to reset DB for tests...');
 
   knex.schema.raw(dropQuery)
     .then(() => {
-      log('DB reset successful!');
+      verboseLog('DB reset successful!');
       process.exit(0);
     }, (err) => {
-      log('DB reset error!');
-      console.log(err);
+      verboseLog('DB reset error!');
+      verboseLog(err);
       process.exit(1);
     });
 }

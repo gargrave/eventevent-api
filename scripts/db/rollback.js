@@ -1,5 +1,6 @@
+const env = require('../../env'); // eslint-disable-line
 const knex = require('../../db');
-const log = require('../../utils/logger').verboseLog;
+const { verboseLog } = require('../../utils/logger');
 
 const config = {
   directory: './db/migrations/',
@@ -8,12 +9,12 @@ const config = {
 
 knex.migrate.rollback(config)
   .then(() => {
-    log('DB rollback successful!');
+    verboseLog('DB rollback successful!');
     process.exit(0);
   })
   .catch((err) => {
-    log('DB rollback error!');
-    log(err);
+    verboseLog('DB rollback error!');
+    verboseLog(err);
     process.exit(1);
   });
 

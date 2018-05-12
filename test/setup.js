@@ -4,8 +4,8 @@ const Lab = require('lab');
 const { before, describe, it } = exports.lab = Lab.script(); // eslint-disable-line
 const { expect } = Code;
 
+const envVars = require('../env');
 const Server = require('../server');
-const envVars = require('../env/test');
 
 describe('Server setup', () => {
   let server;
