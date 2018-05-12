@@ -1,3 +1,3 @@
 module.exports = {
-  baseUrl: '/api/v1',
+  apiUrl: url => `/api/v1${url}`,
 };

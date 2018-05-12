@@ -1,9 +1,9 @@
 const knex = require('../../../db');
-const config = require('../config');
+const { apiUrl } = require('../config');
 
 module.exports = {
   method: 'POST',
-  path: `${config.baseUrl}/events`,
+  path: apiUrl('/events'),
   handler: async(request) => {
     const { payload } = request;
     payload.date = new Date();
@@ -14,8 +14,6 @@ module.exports = {
     return { data: { event } };
   },
   options: {
-    description: 'Event::Create',
-    notes: 'The user parameter defaults to \'stranger\' if unspecified',
-    tags: ['api', 'greeting'],
+    description: 'Events -> Create',
   },
 };

@@ -1,9 +1,9 @@
 const knex = require('../../../db');
-const config = require('../config');
+const { apiUrl } = require('../config');
 
 module.exports = {
   method: ['PUT', 'PATCH'],
-  path: `${config.baseUrl}/events/{id}`,
+  path: apiUrl('/events/{id}'),
   handler: async(request) => {
     const { payload } = request;
     const result = await knex('events')
@@ -14,8 +14,6 @@ module.exports = {
     return { data: { event } };
   },
   options: {
-    description: 'Event::Detail',
-    notes: 'The user parameter defaults to \'stranger\' if unspecified',
-    tags: ['api', 'greeting'],
+    description: 'Events -> Update',
   },
 };

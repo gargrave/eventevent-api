@@ -1,9 +1,9 @@
 const knex = require('../../../db');
-const config = require('../config');
+const { apiUrl } = require('../config');
 
 module.exports = {
   method: 'GET',
-  path: `${config.baseUrl}/events`,
+  path: apiUrl('/events'),
   handler: async() => {
     const result = await knex
       .select()
@@ -11,8 +11,6 @@ module.exports = {
     return { data: { events: result } };
   },
   options: {
-    description: 'Events::Index',
-    notes: 'The user parameter defaults to \'stranger\' if unspecified',
-    tags: ['api', 'greeting'],
+    description: 'Events -> List',
   },
 };
