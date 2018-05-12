@@ -30,6 +30,9 @@ module.exports = {
     return data.find(record => record.id === id);
   },
 
+  randomLoremEvent: () =>
+    randomEvents(faker.lorem.sentence, 1)[0],
+
   create(payload) {
     const record = {
       id: data.length,

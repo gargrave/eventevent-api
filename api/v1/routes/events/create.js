@@ -1,18 +1,33 @@
+const Boom = require('boom');
+
 const { createQuery } = require('../../queries');
 const { apiUrl } = require('../../config');
+const { isValidPayload } = require('../../validators/events');
 
 module.exports = {
   method: 'POST',
 
   path: apiUrl('/events'),
 
-  handler: async(request) => {
+  handler: async(request, h) => {
     const { payload } = request;
-    payload.date = new Date();
+    // payload.date = new Date(); // TODO: get a real date set up for this!
+    // delete payload.date;
+    const validation = isValidPayload(payload);
+    if (validation.error) {
+      return h.response({
+        data: {
+          error: Boom.badRequest(validation.error).output.payload,
+        },
+      }).code(400);
+    }
+
     const params = { payload, table: 'events' };
-    const record = await createQuery(params);
-    const event = record[0];
-    return { data: { event } };
+    const queryResult = await createQuery(params);
+    const { record, error } = queryResult;
+    const response = error ? { error } : { event: record };
+    const code = error ? error.statusCode : 201;
+    return h.response({ data: response }).code(code);
   },
 
   options: {
