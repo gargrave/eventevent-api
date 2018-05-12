@@ -1,18 +1,19 @@
-const knex = require('../../database/db');
+const knex = require('../../db');
+const log = require('../../utils/logger').verboseLog;
 
 const config = {
-  directory: './database/migrations/',
+  directory: './db/migrations/',
   tableName: 'migrations',
 };
 
 knex.migrate.rollback(config)
-  .then((res) => {
-    console.log('DB rollback successful!');
+  .then(() => {
+    log('DB rollback successful!');
     process.exit(0);
   })
   .catch((err) => {
-    console.log('DB rollback error!');
-    console.log(err);
+    log('DB rollback error!');
+    log(err);
     process.exit(1);
   });
 

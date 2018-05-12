@@ -1,4 +1,3 @@
-// date.toISOString().replace(/[-TZ:\.]/g, '').slice(0, 14)
 const fs = require('fs');
 const log = require('../../utils/logger').verboseLog;
 

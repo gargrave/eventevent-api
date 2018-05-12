@@ -9,7 +9,9 @@
     "test": "lab ./test/setup.js ./test/api",
     "lint": "eslint .",
     "routes": "node scripts/printRoutes.js",
-    "db:makemigration": "node scripts/db/makeMigration"
+    "db:makemigration": "node scripts/db/makeMigration",
+    "db:migrate:dev": "NODE_ENV=development node scripts/db/migrate",
+    "db:rollback:dev": "NODE_ENV=development node scripts/db/rollback"
   },
   "dependencies": {
     "blipp": "^3.0.0",
