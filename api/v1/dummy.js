@@ -1,6 +1,8 @@
+const config = require('./config');
+
 module.exports = {
   method: 'GET',
-  path: '/hello',
+  path: `${config.baseUrl}/hello`,
   handler: (request, h) => (
     { data: { message: 'hello world' } }
   ),

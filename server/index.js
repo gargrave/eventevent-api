@@ -6,7 +6,7 @@ const routes = require('../api/routes');
 
 const knex = require('../db');
 
-const API_ROOT = '../api';
+const API_ROOT = '../api/v1';
 
 exports.startServer = async(startNow) => {
   const server = await Glue.compose(manifest, { relativeTo: __dirname });
