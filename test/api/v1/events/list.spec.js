@@ -11,7 +11,7 @@ const path = '/events';
 describe('Api Route: GET Events -> List', () => {
   it('should respond with a list of events', async() => {
     const res = await API.get(path);
-    const { events } = res;
+    const { events } = res.data;
     expect(events).to.be.an.array();
     expect(events.length).to.be.above(1);
   });

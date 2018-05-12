@@ -6,11 +6,13 @@ module.exports = {
 
   path: apiUrl('/events/{id}'),
 
-  handler: async(request) => {
+  handler: async(request, h) => {
     const params = { id: request.params.id, table: 'events' };
-    const result = await deleteQuery(params);
-    const event = result[0];
-    return { data: { event } };
+    const queryResult = await deleteQuery(params);
+    const { record, error } = queryResult;
+    const response = error ? { error } : { event: record };
+    const code = error ? error.statusCode : 200;
+    return h.response({ data: response }).code(code);
   },
 
   options: {
