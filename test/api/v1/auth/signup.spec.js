@@ -22,7 +22,7 @@ describe('API Route: POST User -> Sign Up', () => {
     });
   });
 
-  describe('duplicate user', () => {
+  describe('with duplicate user', () => {
     it('should reject a user if email is already in use', async() => {
       const signupRes = await API.post(path, firstUser);
       const { error } = signupRes.data;
@@ -52,7 +52,7 @@ describe('API Route: POST User -> Sign Up', () => {
       });
     });
 
-    describe('passwords', () => {
+    describe('testing passwords', () => {
       it('should reject a user if password if missing', async() => {
         const user = validSignupData();
         delete user.password;
