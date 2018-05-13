@@ -1,4 +1,4 @@
-const data = require('../mocks/events').get();
+const { data } = require('../mocks/events');
 
 const table = 'events';
 const SQL_REST = `ALTER SEQUENCE "${table}_id_seq" RESTART WITH 1; UPDATE "${table}" SET id = DEFAULT;`;
