@@ -1,13 +1,10 @@
-/*
-A helper file to reset the databse by dropping ALL existing tables.
-Note that this is set to only be allowed to run in a test environment--for obvious reasons.
-*/
+/* A helper file to reset the databse by dropping ALL existing tables. */
 const env = require('../../env'); // eslint-disable-line
 const knex = require('../../db');
 const tables = require('../../db/tables');
 const { verboseLog } = require('../../utils/logger');
 
-if (process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
   const allTables = Object.keys(tables).map(key => tables[key]);
   const dropQuery = `DROP TABLE IF EXISTS migrations, migrations_lock, ${allTables.join(', ')};`;
   verboseLog('Dropping all tables to reset DB for tests...');

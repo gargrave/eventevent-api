@@ -7,6 +7,7 @@
     "db:makemigration": "node scripts/db/makeMigration",
     "db:migrate:dev": "NODE_ENV=development node scripts/db/migrate",
     "db:migrate:test": "NODE_ENV=test node scripts/db/migrate",
+    "db:reset:dev": "NODE_ENV=development node scripts/db/reset",
     "db:reset:test": "NODE_ENV=test node scripts/db/reset",
     "db:rollback:dev": "NODE_ENV=development node scripts/db/rollback",
     "db:seed:dev": "NODE_ENV=development node scripts/db/seed",

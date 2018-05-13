@@ -1,7 +1,11 @@
 const faker = require('faker'); // eslint-disable-line
 
+const getOwnerId = range =>
+  Math.floor(Math.random() * range) + 1;
+
 const randomEvents = (titleGen, len = 20) =>
   Array(len).fill(0).map(() => ({
+    owner_id: getOwnerId(3),
     title: titleGen(),
     date: faker.date.future(),
   }));
