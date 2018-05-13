@@ -11,7 +11,7 @@ const path = '/events';
 
 describe('Api Route: Put | PATCH Event -> Update', () => {
   describe('with valid payload', () => {
-    it('should correctly update an event when payload is valid', async() => {
+    it.skip('should correctly update an event when payload is valid', async() => {
       const res = await API.get(`${path}/5`);
       const { event } = res.data;
       const originalEvent = { ...event };

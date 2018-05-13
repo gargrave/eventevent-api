@@ -1,6 +1,16 @@
 const Joi = require('joi');
 
-const signupPayload = {
+const { generalSchema } = require('./common');
+
+const userPayload = {
+  email: Joi
+    .string()
+    .trim()
+    .email()
+    .required(),
+};
+
+const authPayload = {
   email: Joi
     .string()
     .trim()
@@ -21,7 +31,9 @@ const signupPayload = {
         },
       },
     }),
+};
 
+const signupPayload = {
   passwordConfirm: Joi.any()
     .valid(Joi.ref('password'))
     .required()
@@ -33,5 +45,11 @@ const signupPayload = {
 };
 
 module.exports = {
-  isSignupPayloadValid: data => Joi.validate(data, signupPayload),
+  isValidUser: data => Joi.validate(
+    data, { ...generalSchema, ...userPayload }
+  ),
+
+  isSignupPayloadValid: data => Joi.validate(
+    data, { ...authPayload, ...signupPayload }
+  ),
 };

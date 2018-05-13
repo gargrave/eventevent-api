@@ -8,9 +8,6 @@ const tables = require('../../db/tables');
 const { verboseLog } = require('../../utils/logger');
 
 if (process.env.NODE_ENV === 'test') {
-  // for (const table in tablse) {
-  //   allTables.push(tablse[table]);
-  // }
   const allTables = Object.keys(tables).map(key => tables[key]);
   const dropQuery = `DROP TABLE IF EXISTS migrations, migrations_lock, ${allTables.join(', ')};`;
   verboseLog('Dropping all tables to reset DB for tests...');
