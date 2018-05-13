@@ -18,6 +18,14 @@ module.exports = {
     return null;
   },
 
+  getOwnerId(request) {
+    const decoded = JWT.verify(
+      request.headers.authorization,
+      process.env.AUTH_SECRET_KEY,
+    );
+    return decoded.id;
+  },
+
   populateOwnerId(request) {
     const decoded = JWT.verify(
       request.headers.authorization,
