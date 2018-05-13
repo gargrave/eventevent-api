@@ -7,7 +7,7 @@ module.exports = async({
 }) => {
   const res = { error: null, record: null };
   const queryRes = await knex(table)
-    .where('id', id);
+    .where({ id });
 
   if (queryRes.length) {
     res.record = queryRes[0]; // eslint-disable-line

@@ -3,6 +3,7 @@ const faker = require('faker'); // eslint-disable-line
 
 const MOCK_PASSWORD = bcrypt.hashSync('password', 10);
 const registeredUserMocks = [
+  { email: 'user@example.com', password: MOCK_PASSWORD },
   { email: 'Jo.Auer@hotmail.com', password: MOCK_PASSWORD },
   { email: 'Ashley_Barton5@yahoo.com', password: MOCK_PASSWORD },
   { email: 'Ally87@gmail.com', password: MOCK_PASSWORD },

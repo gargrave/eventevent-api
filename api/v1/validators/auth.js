@@ -46,7 +46,7 @@ module.exports = {
     data, { ...generalSchema, ...userSchema }
   ),
 
-  isSignupPayloadValid: data => Joi.validate(
-    data, signupSchema
-  ),
+  isValidLoginPayload: data => Joi.validate(data, authSchema),
+
+  isSignupPayloadValid: data => Joi.validate(data, signupSchema),
 };
