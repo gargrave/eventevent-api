@@ -1,6 +1,8 @@
 const Boom = require('boom');
 const knex = require('../../../db');
 
+const { failedToFind } = require('../errors');
+
 module.exports = async({
   id,
   table,
@@ -14,7 +16,7 @@ module.exports = async({
   if (queryRes.length) {
     res.record = queryRes[0]; // eslint-disable-line
   } else {
-    res.error = Boom.badRequest('No matching object found.').output.payload;
+    res.error = Boom.notFound(failedToFind(table, id)).output.payload;
   }
 
   return res;

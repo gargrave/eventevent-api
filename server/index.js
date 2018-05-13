@@ -11,9 +11,31 @@ const Glue = require('glue');
 const manifest = require('./manifest');
 const routes = require('../api/v1/routes');
 
+async function validate(decoded, request) {
+  // if (!people[decoded.id]) {
+  //   return { isValid: false };
+  // }
+  // else {
+  //   return { isValid: true };
+  // }
+  return { isValid: true };
+}
+
 exports.startServer = async(startNow) => {
   const server = await Glue.compose(manifest, { relativeTo: __dirname });
   await server.initialize();
+
+  // set up JWT auth
+  await server.register(require('hapi-auth-jwt2')); // eslint-disable-line
+  server.auth.strategy('jwt', 'jwt', {
+    key: process.env.AUTH_SECRET_KEY,
+    validate,
+    verifyOptions: {
+      algorithms: ['HS256'],
+    },
+  });
+  server.auth.default('jwt');
+
   routes().forEach(r => server.route(require(r))); // eslint-disable-line
 
   if (!startNow) {

@@ -13,7 +13,7 @@ const firstUser = validSignupData();
 
 describe('API Route: POST User -> Sign Up', () => {
   describe('with valid payload', () => {
-    it('should successfully create a new User', async() => {
+    it('successfully creates a new User', async() => {
       const signupRes = await API.post(path, firstUser);
       const { user } = signupRes.data;
       const valid = isValidUser(user);
@@ -23,7 +23,7 @@ describe('API Route: POST User -> Sign Up', () => {
   });
 
   describe('with duplicate user', () => {
-    it('should reject a user if email is already in use', async() => {
+    it('rejects a user if email is already in use', async() => {
       const signupRes = await API.post(path, firstUser);
       const { error } = signupRes.data;
       expect(error).to.be.an.object();
@@ -33,7 +33,7 @@ describe('API Route: POST User -> Sign Up', () => {
 
   describe('with invalid payload', () => {
     describe('email', () => {
-      it('should reject a user if email is invalid', async() => {
+      it('rejects a user if email is invalid', async() => {
         const user = validSignupData();
         user.email = 'skdjfuihasdf@lsjdf';
         const signupRes = await API.post(path, user);
@@ -42,7 +42,7 @@ describe('API Route: POST User -> Sign Up', () => {
         expect(error.statusCode).to.equal(400);
       });
 
-      it('should reject a user if email is missing', async() => {
+      it('rejects a user if email is missing', async() => {
         const user = validSignupData();
         delete user.email;
         const signupRes = await API.post(path, user);
@@ -53,7 +53,7 @@ describe('API Route: POST User -> Sign Up', () => {
     });
 
     describe('testing passwords', () => {
-      it('should reject a user if password if missing', async() => {
+      it('rejects a user if password if missing', async() => {
         const user = validSignupData();
         delete user.password;
         const signupRes = await API.post(path, user);
@@ -62,7 +62,7 @@ describe('API Route: POST User -> Sign Up', () => {
         expect(error.statusCode).to.equal(400);
       });
 
-      it('should reject a user if password if too short', async() => {
+      it('rejects a user if password if too short', async() => {
         const user = validSignupData();
         user.password = 'onos';
         const signupRes = await API.post(path, user);
@@ -71,7 +71,7 @@ describe('API Route: POST User -> Sign Up', () => {
         expect(error.statusCode).to.equal(400);
       });
 
-      it('should reject a user if passwords do not match', async() => {
+      it('rejects a user if passwords do not match', async() => {
         const user = validSignupData();
         user.passwordConfirm = 'nomatchy';
         const signupRes = await API.post(path, user);

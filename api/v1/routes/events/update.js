@@ -1,7 +1,7 @@
 const Boom = require('boom');
 
-const { detailQuery, updateQuery } = require('../../queries');
 const { apiUrl } = require('../../config');
+const { detailQuery, updateQuery } = require('../../queries');
 const { isValidUpdatePayload } = require('../../validators/events');
 
 module.exports = {

@@ -1,7 +1,8 @@
 const Boom = require('boom');
 
-const { createQuery } = require('../../queries');
 const { apiUrl } = require('../../config');
+const { populateOwnerId } = require('../../helpers');
+const { createQuery } = require('../../queries');
 const { isValidPayload } = require('../../validators/events');
 
 module.exports = {
@@ -32,5 +33,8 @@ module.exports = {
 
   options: {
     description: 'Events -> Create',
+    pre: [
+      { method: populateOwnerId, failAction: 'error' },
+    ],
   },
 };

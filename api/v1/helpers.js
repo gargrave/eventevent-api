@@ -1,4 +1,5 @@
 const Boom = require('boom');
+const JWT = require('jsonwebtoken');
 
 module.exports = {
   validateOrDie({
@@ -15,5 +16,14 @@ module.exports = {
       }).code(400);
     }
     return null;
+  },
+
+  populateOwnerId(request) {
+    const decoded = JWT.verify(
+      request.headers.authorization,
+      process.env.AUTH_SECRET_KEY,
+    );
+    request.payload.owner_id = decoded.id;
+    return decoded.id;
   },
 };

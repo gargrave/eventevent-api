@@ -3,6 +3,7 @@ const Joi = require('joi');
 const { generalSchema } = require('./common');
 
 const payloadSchema = {
+  owner_id: Joi.number().integer(),
   title: Joi.string().min(1).max(255).required(),
   date: Joi.date().iso().required(),
 };

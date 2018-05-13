@@ -35,6 +35,7 @@ module.exports = {
   },
 
   options: {
+    auth: false,
     description: 'Auth -> Sign Up',
   },
 };
