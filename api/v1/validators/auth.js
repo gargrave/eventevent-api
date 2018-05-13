@@ -15,6 +15,7 @@ const authSchema = {
     .string()
     .trim()
     .email()
+    .regex(/^\S+@\S+\.\S+$/)
     .required(),
 
   password: Joi

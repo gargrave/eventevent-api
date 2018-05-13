@@ -33,7 +33,7 @@ describe('API Route: POST User -> Sign Up', () => {
 
   describe('with invalid payload', () => {
     describe('email', () => {
-      it.skip('should reject a user if email is invalid', async() => {
+      it('should reject a user if email is invalid', async() => {
         const user = validSignupData();
         user.email = 'skdjfuihasdf@lsjdf';
         const signupRes = await API.post(path, user);
@@ -64,7 +64,7 @@ describe('API Route: POST User -> Sign Up', () => {
 
       it('should reject a user if password if too short', async() => {
         const user = validSignupData();
-        user.email = 'onos';
+        user.password = 'onos';
         const signupRes = await API.post(path, user);
         const { error } = signupRes.data;
         expect(error).to.be.an.object();
