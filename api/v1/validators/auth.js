@@ -2,22 +2,17 @@ const Joi = require('joi');
 
 const { generalSchema } = require('./common');
 
-const userPayload = {
-  email: Joi
-    .string()
-    .trim()
-    .email()
-    .required(),
-};
-
-const authSchema = {
+const userSchema = {
   email: Joi
     .string()
     .trim()
     .email()
     .regex(/^\S+@\S+\.\S+$/)
     .required(),
+};
 
+const authSchema = {
+  ...userSchema,
   password: Joi
     .string()
     .trim()
@@ -35,6 +30,7 @@ const authSchema = {
 };
 
 const signupSchema = {
+  ...authSchema,
   passwordConfirm: Joi.any()
     .valid(Joi.ref('password'))
     .required()
@@ -47,10 +43,10 @@ const signupSchema = {
 
 module.exports = {
   isValidUser: data => Joi.validate(
-    data, { ...generalSchema, ...userPayload }
+    data, { ...generalSchema, ...userSchema }
   ),
 
   isSignupPayloadValid: data => Joi.validate(
-    data, { ...authSchema, ...signupSchema }
+    data, signupSchema
   ),
 };
