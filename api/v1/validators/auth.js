@@ -10,7 +10,7 @@ const userPayload = {
     .required(),
 };
 
-const authPayload = {
+const authSchema = {
   email: Joi
     .string()
     .trim()
@@ -33,7 +33,7 @@ const authPayload = {
     }),
 };
 
-const signupPayload = {
+const signupSchema = {
   passwordConfirm: Joi.any()
     .valid(Joi.ref('password'))
     .required()
@@ -50,6 +50,6 @@ module.exports = {
   ),
 
   isSignupPayloadValid: data => Joi.validate(
-    data, { ...authPayload, ...signupPayload }
+    data, { ...authSchema, ...signupSchema }
   ),
 };
