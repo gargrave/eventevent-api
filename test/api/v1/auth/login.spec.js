@@ -23,6 +23,7 @@ describe('API Route: POST User -> Login', () => {
       expect(valid.error).to.equal(null);
       expect(valid.value).to.be.an.object();
       expect(user.password).to.be.undefined();
+      expect(user.token).to.be.a.string();
     });
   });
 

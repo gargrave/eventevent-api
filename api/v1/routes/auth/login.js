@@ -1,11 +1,21 @@
 const bcrypt = require('bcryptjs');
 const Boom = require('boom');
+const JWT = require('jsonwebtoken');
 const knex = require('../../../../db');
 
 const { apiUrl } = require('../../config');
 const { validateOrDie } = require('../../helpers');
 const { invalidLogin } = require('../../errors');
 const { isValidLoginPayload } = require('../../validators/auth');
+
+function buildJWT(user) {
+  const { id, email } = user;
+  const jwtData = { id, email };
+  const duration = Number(process.env.JWT_DEFAULT_DURATION) || (60 * 60);
+  const jwtOptions = { expiresIn: duration };
+  const token = JWT.sign(jwtData, process.env.AUTH_SECRET_KEY, jwtOptions);
+  return token;
+}
 
 module.exports = {
   method: 'POST',
@@ -36,9 +46,8 @@ module.exports = {
       return { data: { error } };
     }
 
-    // TODO: build JWT and add it to the reply
-
     delete user.password; // make sure we do not send password in response
+    user.token = buildJWT(user);
     return h.response({ data: { user } }).code(200);
   },
 

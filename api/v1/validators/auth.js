@@ -9,6 +9,8 @@ const userSchema = {
     .email()
     .regex(/^\S+@\S+\.\S+$/)
     .required(),
+
+  token: Joi.string().trim(),
 };
 
 const authSchema = {
