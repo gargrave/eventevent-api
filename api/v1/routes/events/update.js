@@ -1,6 +1,7 @@
 const Boom = require('boom');
 
 const { apiUrl } = require('../../config');
+const { getOwnerId } = require('../../helpers');
 const { detailQuery, updateQuery } = require('../../queries');
 const { isValidUpdatePayload } = require('../../validators/events');
 
@@ -10,7 +11,12 @@ module.exports = {
   path: apiUrl('/events/{id}'),
 
   handler: async(request, h) => {
-    const getParams = { id: request.params.id, table: 'events' };
+    const ownerId = getOwnerId(request);
+    const getParams = {
+      id: request.params.id,
+      ownerId,
+      table: 'events',
+    };
     const getQueryResult = await detailQuery(getParams);
     const originalRecord = getQueryResult.record;
 
@@ -25,7 +31,12 @@ module.exports = {
     }
 
     // TODO: need to update the 'updated_at' field to NOW()
-    const params = { id: request.params.id, payload, table: 'events' };
+    const params = {
+      id: request.params.id,
+      ownerId,
+      payload,
+      table: 'events',
+    };
     const queryResult = await updateQuery(params);
     const { record, error } = queryResult;
     const response = error ? { error } : { event: record };
