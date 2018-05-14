@@ -1,6 +1,13 @@
 const Boom = require('boom');
 const JWT = require('jsonwebtoken');
 
+function decodeJWT(request) {
+  return JWT.verify(
+    request.headers.authorization,
+    process.env.AUTH_SECRET_KEY,
+  );
+}
+
 module.exports = {
   validateOrDie({
     h,
@@ -18,19 +25,10 @@ module.exports = {
     return null;
   },
 
-  getOwnerId(request) {
-    const decoded = JWT.verify(
-      request.headers.authorization,
-      process.env.AUTH_SECRET_KEY,
-    );
-    return decoded.id;
-  },
+  getOwnerId: request => decodeJWT(request).id,
 
   populateOwnerId(request) {
-    const decoded = JWT.verify(
-      request.headers.authorization,
-      process.env.AUTH_SECRET_KEY,
-    );
+    const decoded = decodeJWT(request);
     request.payload.owner_id = decoded.id;
     return decoded.id;
   },
