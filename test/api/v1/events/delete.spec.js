@@ -6,9 +6,11 @@ const { expect } = Code;
 
 const isValidEvent = require('../../../../api/v1/validators/events').isValid;
 const { registeredUserMocks } = require('../../../../db/mocks/auth');
+const { loginAs, findOwnedRecord } = require('../../../testHelpers');
 const API = require('../../../apiWrapper');
 
 const firstUser = { ...registeredUserMocks[0], password: 'password' };
+const secondUser = { ...registeredUserMocks[1], password: 'password' };
 const path = '/events';
 
 describe('API Route: DELETE Event -> Delete', () => {
@@ -22,19 +24,20 @@ describe('API Route: DELETE Event -> Delete', () => {
   });
 
   describe('when authenticated', () => {
+    let user;
     let token;
 
-    it('logs in correctly', async() => {
-      const loginRes = await API.post('/auth/login', firstUser);
-      token = loginRes.data.user.token; // eslint-disable-line
-      expect(token).not.to.be.undefined();
+    it('logs in as user 1', async() => {
+      user = await loginAs(firstUser);
+      token = user.token; // eslint-disable-line
     });
 
     it('correctly deletes an event', async() => {
       const res1 = await API.get(path, token);
       const originalEvents = res1.data.events;
+      const { id } = originalEvents[0];
 
-      const deleteRes = await API.del(`${path}/${1}`, token);
+      const deleteRes = await API.del(`${path}/${id}`, token);
       const { event } = deleteRes.data;
       isValidEvent(event, (err, value) => {
         expect(err).to.equal(null);
@@ -55,6 +58,18 @@ describe('API Route: DELETE Event -> Delete', () => {
       expect(error.statusCode).to.equal(404);
     });
 
-    it('returns a 401 error if trying to delete another user\'s object');
+    it('returns a 404 error if trying to delete another user\'s object', async() => {
+      const ownedEvent = await findOwnedRecord('events', token);
+
+      // now get a token for user #2
+      user = await loginAs(secondUser);
+      token = user.token; // eslint-disable-line
+
+      // and try to delete user #1's entry
+      const deleteRes = await API.del(`${path}/${ownedEvent.id}`, token);
+      const { event, error } = deleteRes.data;
+      expect(event).to.be.undefined();
+      expect(error.statusCode).to.equal(404);
+    });
   });
 });

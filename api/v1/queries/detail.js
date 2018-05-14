@@ -1,15 +1,17 @@
 const Boom = require('boom');
+
 const knex = require('../../../db');
 
 const { failedToFind } = require('../errors');
 
 module.exports = async({
   id,
+  ownerId,
   table,
 }) => {
   const res = { error: null, record: null };
   const queryRes = await knex(table)
-    .where({ id });
+    .where({ id, owner_id: ownerId });
 
   if (queryRes.length) {
     res.record = queryRes[0]; // eslint-disable-line

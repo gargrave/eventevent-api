@@ -6,9 +6,11 @@ const { expect } = Code;
 
 const isValidEvent = require('../../../../api/v1/validators/events').isValid;
 const { registeredUserMocks } = require('../../../../db/mocks/auth');
+const { loginAs, findOwnedRecord } = require('../../../testHelpers');
 const API = require('../../../apiWrapper');
 
 const firstUser = { ...registeredUserMocks[0], password: 'password' };
+const secondUser = { ...registeredUserMocks[1], password: 'password' };
 const path = '/events';
 
 describe('API Route: GET Event -> Detail', () => {
@@ -22,16 +24,17 @@ describe('API Route: GET Event -> Detail', () => {
   });
 
   describe('when authenticated', () => {
+    let user;
     let token;
 
-    it('logs in correctly', async() => {
-      const loginRes = await API.post('/auth/login', firstUser);
-      token = loginRes.data.user.token; // eslint-disable-line
-      expect(token).not.to.be.undefined();
+    it('logs in as user #1', async() => {
+      user = await loginAs(firstUser);
+      token = user.token; // eslint-disable-line
     });
 
     it('responds with a single valid event', async() => {
-      const res = await API.get(`${path}/3`, token);
+      const ownedEvent = await findOwnedRecord('events', token);
+      const res = await API.get(`${path}/${ownedEvent.id}`, token);
       const { event } = res.data;
       isValidEvent(event, (err, value) => {
         expect(err).to.equal(null);
@@ -47,6 +50,18 @@ describe('API Route: GET Event -> Detail', () => {
       expect(error.statusCode).to.equal(404);
     });
 
-    it('responds with a 401 error if the object belongs to another user');
+    it('returns a 404 error if trying to get another user\'s object', async() => {
+      const ownedEvent = await findOwnedRecord('events', token);
+
+      // now get a token for user #2
+      user = await loginAs(secondUser);
+      token = user.token; // eslint-disable-line
+
+      // and try to delete user #1's entry
+      const deleteRes = await API.del(`${path}/${ownedEvent.id}`, token);
+      const { event, error } = deleteRes.data;
+      expect(event).to.be.undefined();
+      expect(error.statusCode).to.equal(404);
+    });
   });
 });

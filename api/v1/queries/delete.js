@@ -5,12 +5,13 @@ const { failedToFind } = require('../errors');
 
 module.exports = async({
   id,
+  ownerId,
   table,
 }) => {
   const res = { error: null, record: null };
   const queryRes = await knex(table)
     .returning('*')
-    .where('id', id)
+    .where({ id, owner_id: ownerId })
     .delete();
 
   if (queryRes.length) {
