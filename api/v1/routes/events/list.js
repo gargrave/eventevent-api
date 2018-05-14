@@ -1,6 +1,6 @@
 const { apiUrl } = require('../../config');
-const { listQuery } = require('../../queries');
 const { getOwnerId } = require('../../helpers');
+const { listQuery } = require('../../queries');
 
 module.exports = {
   method: 'GET',

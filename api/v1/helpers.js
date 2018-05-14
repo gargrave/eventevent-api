@@ -9,24 +9,33 @@ function decodeJWT(request) {
 }
 
 module.exports = {
-  validateOrDie({
-    h,
-    payload,
-    validator,
-  }) {
+  /**
+   * Validates the current request payload with the provided Joi validation function.
+   * Returns a Boom error if errors are found; otherwise returns null.
+   * @param {*} h HapiJS response "h" object
+   * @param {*} payload The request payload to validate
+   * @param {*} validator The Joi validation function to use against the payload
+   */
+  validateOrDie({ h, payload, validator }) {
     const validation = validator(payload);
     if (validation.error) {
       return h.response({
-        data: {
-          error: Boom.badRequest(validation.error).output.payload,
-        },
+        data: { error: Boom.badRequest(validation.error).output.payload },
       }).code(400);
     }
     return null;
   },
 
+  /**
+   * Returns the owner ID of the currently authenticated user
+   * @param {*} request HapiJS request object
+   */
   getOwnerId: request => decodeJWT(request).id,
 
+  /**
+   * Adds the owner ID of the currently authenticated user to the request payload
+   * @param {*} request HapiJS request object
+   */
   populateOwnerId(request) {
     const decoded = decodeJWT(request);
     request.payload.owner_id = decoded.id;
