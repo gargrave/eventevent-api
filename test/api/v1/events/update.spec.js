@@ -27,16 +27,16 @@ describe('API Route: Put | PATCH Event -> Update', () => {
       it('correctly updates an event', async() => {
         const ownedEvent = await findOwnedRecord('events', token);
         const event = { ...ownedEvent };
-        event.title = `This is the Updated Title-${Math.random()}`;
+        event.title = `Updated Title-${Math.random()}`;
 
         const updateRes = await API.put(
           `${path}/${ownedEvent.id}`, event, token
         );
         const updated = updateRes.data.event;
-
-        const { value, error } = isValidEvent(event);
+        const { value, error } = isValidEvent(updated);
         expect(error).to.equal(null);
         expect(value).to.be.an.object();
+
         expect(updated.title).to.equal(event.title);
         expect(updated.title).not.to.equal(ownedEvent.title);
         expect(updated.date).to.equal(ownedEvent.date);
@@ -45,18 +45,47 @@ describe('API Route: Put | PATCH Event -> Update', () => {
       });
     });
 
-    describe('invalid "title" field', () => {
-      it('rejects a payload with missing title');
+    describe('with invalid "title" field', () => {
+      it('rejects a payload with empty title', async() => {
+        const ownedEvent = await findOwnedRecord('events', token);
+        ownedEvent.title = '';
 
-      it('rejects a payload with empty title');
+        const res = await API.put(
+          `${path}/${ownedEvent.id}`, ownedEvent, token
+        );
+        const { event, error } = res.data;
+
+        expect(event).to.equal(undefined);
+        expect(error.statusCode).to.equal(400);
+      });
     });
 
-    describe('invalid "date" field', () => {
-      it('rejects a payload with missing date');
+    describe('with invalid "date" field', () => {
+      it('rejects a payload with empty date', async() => {
+        const ownedEvent = await findOwnedRecord('events', token);
+        ownedEvent.date = '';
 
-      it('rejects a payload with empty date');
+        const res = await API.put(
+          `${path}/${ownedEvent.id}`, ownedEvent, token
+        );
+        const { event, error } = res.data;
 
-      it('rejects a payload with ill-formatted date');
+        expect(event).to.equal(undefined);
+        expect(error.statusCode).to.equal(400);
+      });
+
+      it('rejects a payload with ill-formatted date', async() => {
+        const ownedEvent = await findOwnedRecord('events', token);
+        ownedEvent.date = 'notactuallyadate';
+
+        const res = await API.put(
+          `${path}/${ownedEvent.id}`, ownedEvent, token
+        );
+        const { event, error } = res.data;
+
+        expect(event).to.equal(undefined);
+        expect(error.statusCode).to.equal(400);
+      });
     });
 
     it('returns a 404 error if trying to update another user\'s object', async() => {
