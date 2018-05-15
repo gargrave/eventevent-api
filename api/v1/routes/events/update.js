@@ -2,6 +2,7 @@ const Boom = require('boom');
 
 const { apiUrl } = require('../../config');
 const { getOwnerId } = require('../../helpers/common');
+const { eventsSelectFields } = require('../../helpers/events');
 const { detailQuery, updateQuery } = require('../../queries');
 const { isValidUpdatePayload } = require('../../validators/events');
 
@@ -35,6 +36,7 @@ module.exports = {
       id: request.params.id,
       ownerId,
       payload,
+      returning: eventsSelectFields,
       table: 'events',
     };
     const queryResult = await updateQuery(params);

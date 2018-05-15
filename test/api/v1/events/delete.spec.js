@@ -39,10 +39,15 @@ describe('API Route: DELETE Event -> Delete', () => {
 
       const deleteRes = await API.del(`${path}/${id}`, token);
       const { event } = deleteRes.data;
-      isValidEvent(event, (err, value) => {
-        expect(err).to.equal(null);
-        expect(value).to.be.an.object();
-      });
+      const { value, error } = isValidEvent(event);
+      expect(error).to.equal(null);
+      expect(value).to.be.an.object();
+      expect(event.id).to.be.a.number();
+      expect(event.title).to.be.a.string();
+      expect(event.date).to.be.a.string();
+      expect(event.created_at).to.be.a.string();
+      expect(event.updated_at).to.be.a.string();
+      expect(event.owner_id).to.be.undefined();
 
       const res2 = await API.get(path, token);
       const updatedEvents = res2.data.events;

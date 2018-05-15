@@ -2,6 +2,7 @@ const Boom = require('boom');
 
 const { apiUrl } = require('../../config');
 const { populateOwnerId } = require('../../helpers/common');
+const { eventsSelectFields } = require('../../helpers/events');
 const { createQuery } = require('../../queries');
 const { isValidPayload } = require('../../validators/events');
 
@@ -23,7 +24,11 @@ module.exports = {
       }).code(400);
     }
 
-    const params = { payload, table: 'events' };
+    const params = {
+      payload,
+      returning: eventsSelectFields,
+      table: 'events',
+    };
     const queryResult = await createQuery(params);
     const { record, error } = queryResult;
     const response = error ? { error } : { event: record };

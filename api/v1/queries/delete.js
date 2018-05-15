@@ -1,16 +1,17 @@
 const Boom = require('boom');
-const knex = require('../../../db');
 
+const knex = require('../../../db');
 const { failedToFind } = require('../errors');
 
 module.exports = async({
   id,
   ownerId,
+  returning = '*',
   table,
 }) => {
   const res = { error: null, record: null };
   const queryRes = await knex(table)
-    .returning('*')
+    .returning(returning)
     .where({ id, owner_id: ownerId })
     .delete();
 

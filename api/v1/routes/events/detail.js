@@ -1,5 +1,6 @@
 const { apiUrl } = require('../../config');
 const { getOwnerId } = require('../../helpers/common');
+const { eventsSelectFields } = require('../../helpers/events');
 const { detailQuery } = require('../../queries');
 
 module.exports = {
@@ -11,6 +12,7 @@ module.exports = {
     const params = {
       id: request.params.id,
       ownerId: getOwnerId(request),
+      select: eventsSelectFields,
       table: 'events',
     };
     const queryResult = await detailQuery(params);
