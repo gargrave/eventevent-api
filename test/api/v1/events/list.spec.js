@@ -39,5 +39,17 @@ describe('API Route: GET Events -> List', () => {
       expect(events.length).to.be.above(1);
       expect(unownedEvents.length).to.equal(0);
     });
+
+    it('includes the correct data in the events', async() => {
+      const res = await API.get(path, token);
+      const { events } = res.data;
+      const [event] = events;
+      expect(event.id).to.be.a.number();
+      expect(event.title).to.be.a.string();
+      expect(event.date).to.be.a.string();
+      expect(event.created_at).to.be.a.string();
+      expect(event.updated_at).to.be.a.string();
+      expect(event.owner_id).to.be.undefined();
+    });
   });
 });
