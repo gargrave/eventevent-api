@@ -14,8 +14,8 @@ module.exports = {
       select: eventsSelectFields,
       table: 'events',
     };
-    const result = await listQuery(params);
-    return { data: { events: result } };
+    const queryResult = await listQuery(params);
+    return { data: { events: queryResult } };
   },
 
   options: {

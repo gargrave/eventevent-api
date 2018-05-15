@@ -33,6 +33,7 @@ describe('API Route: GET Events -> List', () => {
 
     it('responds with a list of only the current user\'s events', async() => {
       const res = await API.get(path, token);
+      expect(res.statusCode).to.equal(200);
       const { events } = res.data;
       const unownedEvents = events.filter(e => e.ownerId === user.id);
       expect(events).to.be.an.array();

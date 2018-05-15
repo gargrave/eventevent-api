@@ -1,7 +1,7 @@
 const { apiUrl } = require('../../config');
 const { getOwnerId } = require('../../helpers/common');
 const { eventsSelectFields } = require('../../helpers/events');
-const { deleteQuery } = require('../../queries');
+const { deleteQuery, parseQueryResult } = require('../../queries');
 
 module.exports = {
   method: 'DELETE',
@@ -16,10 +16,7 @@ module.exports = {
       table: 'events',
     };
     const queryResult = await deleteQuery(params);
-    const { record, error } = queryResult;
-    const response = error ? { error } : { event: record };
-    const code = error ? error.statusCode : 200;
-    return h.response({ data: response }).code(code);
+    return parseQueryResult(h, queryResult, 'event');
   },
 
   options: {

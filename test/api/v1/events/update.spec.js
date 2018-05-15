@@ -32,6 +32,7 @@ describe('API Route: Put | PATCH Event -> Update', () => {
         const updateRes = await API.put(
           `${path}/${ownedEvent.id}`, event, token
         );
+        expect(updateRes.statusCode).to.equal(200);
         const updated = updateRes.data.event;
         const { value, error } = isValidEvent(updated);
         expect(error).to.equal(null);

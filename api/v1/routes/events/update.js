@@ -3,7 +3,7 @@ const Boom = require('boom');
 const { apiUrl } = require('../../config');
 const { getOwnerId } = require('../../helpers/common');
 const { eventsSelectFields } = require('../../helpers/events');
-const { detailQuery, updateQuery } = require('../../queries');
+const { detailQuery, parseQueryResult, updateQuery } = require('../../queries');
 const { isValidUpdatePayload } = require('../../validators/events');
 
 module.exports = {
@@ -40,10 +40,7 @@ module.exports = {
       table: 'events',
     };
     const queryResult = await updateQuery(params);
-    const { record, error } = queryResult;
-    const response = error ? { error } : { event: record };
-    const code = error ? error.statusCode : 200;
-    return h.response({ data: response }).code(code);
+    return parseQueryResult(h, queryResult, 'event');
   },
 
   options: {

@@ -8,10 +8,7 @@ module.exports = async({
   returning = '*',
   table,
 }) => {
-  const res = {
-    error: null,
-    record: null,
-  };
+  const res = { error: null, record: null };
 
   try {
     const queryRes = await knex(table)

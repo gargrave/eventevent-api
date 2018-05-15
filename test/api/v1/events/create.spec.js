@@ -40,6 +40,7 @@ describe('API Route: POST Event -> Create', () => {
         const createRes = await API.post(
           path, randomLoremEvent(), token
         );
+        expect(createRes.statusCode).to.equal(201);
         const { event } = createRes.data;
         const { value, error } = isValidEvent(event);
         expect(error).to.equal(null);

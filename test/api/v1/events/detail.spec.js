@@ -35,6 +35,7 @@ describe('API Route: GET Event -> Detail', () => {
     it('responds with a single valid event', async() => {
       const ownedEvent = await findOwnedRecord('events', token);
       const res = await API.get(`${path}/${ownedEvent.id}`, token);
+      expect(res.statusCode).to.equal(200);
       const { event } = res.data;
       isValidEvent(event, (err, value) => {
         expect(err).to.equal(null);
@@ -42,7 +43,7 @@ describe('API Route: GET Event -> Detail', () => {
       });
     });
 
-    it('includes the correct data in the events', async() => {
+    it('includes the correct data in the event', async() => {
       const ownedEvent = await findOwnedRecord('events', token);
       const res = await API.get(`${path}/${ownedEvent.id}`, token);
       const { event } = res.data;

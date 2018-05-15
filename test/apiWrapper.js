@@ -24,7 +24,10 @@ async function request(method, url, data = null, token = null) {
   try {
     const req = buildReq(method, url, data, token);
     const res = await axios(req);
-    return { data: res.data.data || [] };
+    return {
+      data: res.data.data || [],
+      statusCode: res.status,
+    };
   } catch (err) {
     const error = err.response.data.data
       ? err.response.data.data

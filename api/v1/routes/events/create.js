@@ -3,7 +3,7 @@ const Boom = require('boom');
 const { apiUrl } = require('../../config');
 const { populateOwnerId } = require('../../helpers/common');
 const { eventsSelectFields } = require('../../helpers/events');
-const { createQuery } = require('../../queries');
+const { createQuery, parseQueryResult } = require('../../queries');
 const { isValidPayload } = require('../../validators/events');
 
 module.exports = {
@@ -13,8 +13,7 @@ module.exports = {
 
   handler: async(request, h) => {
     const { payload } = request;
-    // payload.date = new Date(); // TODO: get a real date set up for this!
-    // delete payload.date;
+    // TODO: write a wrapper for these repetive validation calls
     const validation = isValidPayload(payload);
     if (validation.error) {
       return h.response({
@@ -30,10 +29,7 @@ module.exports = {
       table: 'events',
     };
     const queryResult = await createQuery(params);
-    const { record, error } = queryResult;
-    const response = error ? { error } : { event: record };
-    const code = error ? error.statusCode : 201;
-    return h.response({ data: response }).code(code);
+    return parseQueryResult(h, queryResult, 'event', 201);
   },
 
   options: {

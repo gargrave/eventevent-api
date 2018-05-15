@@ -38,6 +38,7 @@ describe('API Route: DELETE Event -> Delete', () => {
       const { id } = originalEvents[0];
 
       const deleteRes = await API.del(`${path}/${id}`, token);
+      expect(deleteRes.statusCode).to.equal(200);
       const { event } = deleteRes.data;
       const { value, error } = isValidEvent(event);
       expect(error).to.equal(null);
