@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 
 const { apiUrl } = require('../../config');
-const { validateOrDie } = require('../../helpers');
+const { validateOrDie } = require('../../helpers/common');
 const { createQuery } = require('../../queries');
 const { isSignupPayloadValid } = require('../../validators/auth');
 

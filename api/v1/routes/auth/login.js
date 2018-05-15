@@ -4,7 +4,7 @@ const JWT = require('jsonwebtoken');
 const knex = require('../../../../db');
 
 const { apiUrl } = require('../../config');
-const { validateOrDie } = require('../../helpers');
+const { validateOrDie } = require('../../helpers/common');
 const { invalidLogin } = require('../../errors');
 const { isValidLoginPayload } = require('../../validators/auth');
 

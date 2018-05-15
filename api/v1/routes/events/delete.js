@@ -1,5 +1,5 @@
 const { apiUrl } = require('../../config');
-const { getOwnerId } = require('../../helpers');
+const { getOwnerId } = require('../../helpers/common');
 const { deleteQuery } = require('../../queries');
 
 module.exports = {

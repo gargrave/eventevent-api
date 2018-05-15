@@ -1,7 +1,7 @@
 const Boom = require('boom');
 
 const { apiUrl } = require('../../config');
-const { getOwnerId } = require('../../helpers');
+const { getOwnerId } = require('../../helpers/common');
 const { detailQuery, updateQuery } = require('../../queries');
 const { isValidUpdatePayload } = require('../../validators/events');
 

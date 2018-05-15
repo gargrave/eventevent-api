@@ -1,7 +1,7 @@
 const Boom = require('boom');
 
 const { apiUrl } = require('../../config');
-const { populateOwnerId } = require('../../helpers');
+const { populateOwnerId } = require('../../helpers/common');
 const { createQuery } = require('../../queries');
 const { isValidPayload } = require('../../validators/events');
 
