@@ -1,5 +1,5 @@
 const { apiUrl } = require('../../config');
-const { getOwnerId, validateOrDie } = require('../../helpers/common');
+const { getOwnerId, setUpdatedAt, validateOrDie } = require('../../helpers/common');
 const { eventsSelectFields } = require('../../helpers/events');
 const { detailQuery, parseQueryResult, updateQuery } = require('../../queries');
 const { isValidUpdatePayload } = require('../../validators/events');
@@ -32,11 +32,10 @@ module.exports = {
       return val;
     }
 
-    // TODO: need to update the 'updated_at' field to NOW()
     const params = {
       id: request.params.id,
       ownerId: getOwnerId(request),
-      payload,
+      payload: setUpdatedAt(payload),
       returning: eventsSelectFields,
       table: 'events',
     };

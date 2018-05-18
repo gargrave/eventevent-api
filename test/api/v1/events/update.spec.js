@@ -44,7 +44,7 @@ describe('API Route: Put | PATCH Event -> Update', () => {
         expect(updated.title).not.to.equal(ownedEvent.title);
         expect(updated.date).to.equal(ownedEvent.date);
         expect(updated.created_at).to.equal(ownedEvent.created_at);
-        // expect(updated.updated_at).not.to.equal(ownedEvent.updated_at);
+        expect(updated.updated_at).not.to.equal(ownedEvent.updated_at);
       });
     });
 

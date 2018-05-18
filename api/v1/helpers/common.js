@@ -1,6 +1,8 @@
 const Boom = require('boom');
 const JWT = require('jsonwebtoken');
 
+const knex = require('../../../db');
+
 function decodeJWT(request) {
   return JWT.verify(
     request.headers.authorization,
@@ -41,4 +43,10 @@ module.exports = {
     request.payload.owner_id = decoded.id;
     return decoded.id;
   },
+
+  /**
+   * Updates the 'updated_at' field on the provided payload to NOW.
+   */
+  setUpdatedAt: payload => ({ ...payload, updated_at: knex.raw('NOW()') }),
 };
+
