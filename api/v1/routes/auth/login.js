@@ -35,7 +35,7 @@ module.exports = {
       .where({ email: payload.email });
     if (!queryRes.length) {
       const error = Boom.notFound(`No user found with email: ${payload.email}.`).output.payload;
-      return { data: { error } };
+      return h.response({ data: { error } }).code(404);
     }
 
     // confirm password matches or error out
@@ -43,7 +43,7 @@ module.exports = {
     const match = bcrypt.compareSync(payload.password, user.password);
     if (!match) {
       const error = Boom.unauthorized(invalidLogin()).output.payload;
-      return { data: { error } };
+      return h.response({ data: { error } }).code(401);
     }
 
     delete user.password; // make sure we do not send password in response
@@ -53,6 +53,7 @@ module.exports = {
 
   options: {
     auth: false,
+    cors: { origin: ['*'] },
     description: 'Auth -> Sign Up',
   },
 };

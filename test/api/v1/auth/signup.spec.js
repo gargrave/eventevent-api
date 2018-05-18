@@ -25,7 +25,9 @@ describe('API Route: POST User -> Sign Up', () => {
   describe('with duplicate user', () => {
     it('rejects a user if email is already in use', async() => {
       const signupRes = await API.post(path, firstUser);
-      const { error } = signupRes.data;
+      const { data: { error }, response } = signupRes;
+      expect(response).to.be.an.object();
+      expect(response.status).to.equal(400);
       expect(error).to.be.an.object();
       expect(error.statusCode).to.equal(400);
     });
@@ -37,7 +39,9 @@ describe('API Route: POST User -> Sign Up', () => {
         const user = validSignupData();
         user.email = 'skdjfuihasdf@lsjdf';
         const signupRes = await API.post(path, user);
-        const { error } = signupRes.data;
+        const { data: { error }, response } = signupRes;
+        expect(response).to.be.an.object();
+        expect(response.status).to.equal(400);
         expect(error).to.be.an.object();
         expect(error.statusCode).to.equal(400);
       });
@@ -46,7 +50,9 @@ describe('API Route: POST User -> Sign Up', () => {
         const user = validSignupData();
         delete user.email;
         const signupRes = await API.post(path, user);
-        const { error } = signupRes.data;
+        const { data: { error }, response } = signupRes;
+        expect(response).to.be.an.object();
+        expect(response.status).to.equal(400);
         expect(error).to.be.an.object();
         expect(error.statusCode).to.equal(400);
       });
@@ -57,7 +63,9 @@ describe('API Route: POST User -> Sign Up', () => {
         const user = validSignupData();
         delete user.password;
         const signupRes = await API.post(path, user);
-        const { error } = signupRes.data;
+        const { data: { error }, response } = signupRes;
+        expect(response).to.be.an.object();
+        expect(response.status).to.equal(400);
         expect(error).to.be.an.object();
         expect(error.statusCode).to.equal(400);
       });
@@ -66,7 +74,9 @@ describe('API Route: POST User -> Sign Up', () => {
         const user = validSignupData();
         user.password = 'onos';
         const signupRes = await API.post(path, user);
-        const { error } = signupRes.data;
+        const { data: { error }, response } = signupRes;
+        expect(response).to.be.an.object();
+        expect(response.status).to.equal(400);
         expect(error).to.be.an.object();
         expect(error.statusCode).to.equal(400);
       });
@@ -75,7 +85,9 @@ describe('API Route: POST User -> Sign Up', () => {
         const user = validSignupData();
         user.passwordConfirm = 'nomatchy';
         const signupRes = await API.post(path, user);
-        const { error } = signupRes.data;
+        const { data: { error }, response } = signupRes;
+        expect(response).to.be.an.object();
+        expect(response.status).to.equal(400);
         expect(error).to.be.an.object();
         expect(error.statusCode).to.equal(400);
       });

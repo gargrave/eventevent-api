@@ -32,7 +32,7 @@ async function request(method, url, data = null, token = null) {
     const error = err.response.data.data
       ? err.response.data.data
       : { error: err.response.data };
-    return { data: error };
+    return { data: error, response: err.response };
   }
 }
 
