@@ -1,7 +1,5 @@
-const Boom = require('boom');
-
 const { apiUrl } = require('../../config');
-const { populateOwnerId } = require('../../helpers/common');
+const { populateOwnerId, validateOrDie } = require('../../helpers/common');
 const { eventsSelectFields } = require('../../helpers/events');
 const { createQuery, parseQueryResult } = require('../../queries');
 const { isValidPayload } = require('../../validators/events');
@@ -13,14 +11,9 @@ module.exports = {
 
   handler: async(request, h) => {
     const { payload } = request;
-    // TODO: write a wrapper for these repetive validation calls
-    const validation = isValidPayload(payload);
-    if (validation.error) {
-      return h.response({
-        data: {
-          error: Boom.badRequest(validation.error).output.payload,
-        },
-      }).code(400);
+    const val = validateOrDie({ h, payload, validator: isValidPayload });
+    if (val) {
+      return val;
     }
 
     const params = {

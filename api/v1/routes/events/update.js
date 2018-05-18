@@ -1,10 +1,19 @@
-const Boom = require('boom');
-
 const { apiUrl } = require('../../config');
-const { getOwnerId } = require('../../helpers/common');
+const { getOwnerId, validateOrDie } = require('../../helpers/common');
 const { eventsSelectFields } = require('../../helpers/events');
 const { detailQuery, parseQueryResult, updateQuery } = require('../../queries');
 const { isValidUpdatePayload } = require('../../validators/events');
+
+async function getOriginalRecord(request) {
+  const ownerId = getOwnerId(request);
+  const getParams = {
+    id: request.params.id,
+    ownerId,
+    table: 'events',
+  };
+  const getQueryResult = await detailQuery(getParams);
+  return getQueryResult.record;
+}
 
 module.exports = {
   method: ['PUT', 'PATCH'],
@@ -12,29 +21,21 @@ module.exports = {
   path: apiUrl('/events/{id}'),
 
   handler: async(request, h) => {
-    const ownerId = getOwnerId(request);
-    const getParams = {
-      id: request.params.id,
-      ownerId,
-      table: 'events',
-    };
-    const getQueryResult = await detailQuery(getParams);
-    const originalRecord = getQueryResult.record;
-
+    const originalRecord = await getOriginalRecord(request);
     const { payload } = request;
-    const validation = isValidUpdatePayload({ ...originalRecord, ...payload });
-    if (validation.error) {
-      return h.response({
-        data: {
-          error: Boom.badRequest(validation.error).output.payload,
-        },
-      }).code(400);
+    const val = validateOrDie({
+      h,
+      payload: { ...originalRecord, ...payload },
+      validator: isValidUpdatePayload,
+    });
+    if (val) {
+      return val;
     }
 
     // TODO: need to update the 'updated_at' field to NOW()
     const params = {
       id: request.params.id,
-      ownerId,
+      ownerId: getOwnerId(request),
       payload,
       returning: eventsSelectFields,
       table: 'events',
