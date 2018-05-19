@@ -30,9 +30,9 @@ describe('API Route: POST User -> Login', () => {
       const loginRes = await API.post(path, badUser);
       const { data: { error }, response } = loginRes;
       expect(response).to.be.an.object();
-      expect(response.status).to.equal(404);
+      expect(response.status).to.equal(400);
       expect(error).to.be.an.object();
-      expect(error.statusCode).to.equal(404);
+      expect(error.statusCode).to.equal(400);
     });
   });
 
