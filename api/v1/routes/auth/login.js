@@ -34,8 +34,8 @@ module.exports = {
     const queryRes = await knex('users')
       .where({ email: payload.email });
     if (!queryRes.length) {
-      const error = Boom.notFound(`No user found with email: ${payload.email}.`).output.payload;
-      return h.response({ data: { error } }).code(404);
+      const error = Boom.badRequest(`No user found with email: ${payload.email}.`).output.payload;
+      return h.response({ data: { error } }).code(400);
     }
 
     // confirm password matches or error out
@@ -53,7 +53,6 @@ module.exports = {
 
   options: {
     auth: false,
-    cors: { origin: ['*'] },
     description: 'Auth -> Sign Up',
   },
 };
