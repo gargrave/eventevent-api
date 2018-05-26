@@ -10,6 +10,7 @@ module.exports = {
 
   handler: async(request) => {
     const params = {
+      orderBy: 'date',
       ownerId: getOwnerId(request),
       select: eventsSelectFields,
       table: 'events',
