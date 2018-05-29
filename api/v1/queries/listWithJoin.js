@@ -1,6 +1,7 @@
 const knex = require('../../../db');
 
 module.exports = async({
+  innerJoin,
   orderBy = 'created_at',
   orderByDir = 'asc',
   ownerId,
@@ -11,5 +12,6 @@ module.exports = async({
   knex
     .select(select)
     .from(table)
+    .innerJoin(...innerJoin)
     .where(where || { owner_id: ownerId })
     .orderBy(orderBy, orderByDir);

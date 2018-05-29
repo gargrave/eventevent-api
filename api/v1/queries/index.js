@@ -1,6 +1,7 @@
 const createQuery = require('./create');
 const deleteQuery = require('./delete');
 const detailQuery = require('./detail');
+const listWithJoinQuery = require('./listWithJoin');
 const listQuery = require('./list');
 const updateQuery = require('./update');
 
@@ -15,6 +16,7 @@ module.exports = {
   createQuery,
   deleteQuery,
   detailQuery,
+  listWithJoinQuery,
   listQuery,
   parseQueryResult,
   updateQuery,
