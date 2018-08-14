@@ -1,11 +1,10 @@
 const faker = require('faker'); // eslint-disable-line
 
-const getOwnerId = range =>
-  Math.floor(Math.random() * range) + 1;
+const { getHostableUserId } = require('./auth');
 
 const randomEvents = (titleGen, len = 20) =>
   Array(len).fill(0).map(() => ({
-    owner_id: getOwnerId(3),
+    owner_id: getHostableUserId(),
     title: titleGen(),
     date: faker.date.future(),
   }));
@@ -17,6 +16,9 @@ const data = [
 
 module.exports = {
   data,
+
+  getRandomEventId: () =>
+    Math.floor(Math.random() * data.length),
 
   randomLoremEvent: () =>
     randomEvents(faker.lorem.sentence, 1)[0],
