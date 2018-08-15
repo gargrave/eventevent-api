@@ -1,7 +1,7 @@
 const Code = require('code');
 const Lab = require('lab');
 
-const { before, describe, it } = exports.lab = Lab.script(); // eslint-disable-line
+const { describe, it } = exports.lab = Lab.script(); // eslint-disable-line
 const { expect } = Code;
 
 const isValidEvent = require('../../../../api/v1/validators/events').isValid;

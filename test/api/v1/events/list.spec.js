@@ -1,11 +1,10 @@
 const Code = require('code');
 const Lab = require('lab');
 
-const { before, describe, it } = exports.lab = Lab.script(); // eslint-disable-line
+const { describe, it } = exports.lab = Lab.script(); // eslint-disable-line
 const { expect } = Code;
 
 const { registeredUserMocks } = require('../../../../db/mocks/auth');
-const { findUnownedEvents } = require('../../../../db/mocks/events');
 const API = require('../../../apiWrapper');
 
 const firstUser = { ...registeredUserMocks[0], password: 'password' };
