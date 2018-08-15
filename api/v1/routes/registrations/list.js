@@ -7,6 +7,7 @@ const parseEventData = queryResult =>
   queryResult.reduce((accum, value) =>
     accum.concat({
       id: value.registration_id,
+      user_id: value.user_id,
       registered_at: value.registered_at,
       event: {
         id: value.event_id,

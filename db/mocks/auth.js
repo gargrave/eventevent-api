@@ -3,7 +3,7 @@ const faker = require('faker'); // eslint-disable-line
 
 const HOSTABLE_USERS_RANGE = 3;
 const REGISTERABLE_USERS_MIN = HOSTABLE_USERS_RANGE + 2;
-const REGISTERABLE_USERS_RANGE = 3;
+const REGISTERABLE_USERS_RANGE = 6;
 
 const MOCK_PASSWORD = bcrypt.hashSync('password', 10);
 const registeredUserMocks = [
@@ -29,12 +29,17 @@ const validSignupData = () => ({
   passwordConfirm: 'password',
 });
 
+const registerableUserId = () =>
+  Math.floor(Math.random() * (REGISTERABLE_USERS_RANGE - 1)) + REGISTERABLE_USERS_MIN;
+
 module.exports = {
   getHostableUserId: () =>
     Math.floor(Math.random() * HOSTABLE_USERS_RANGE) + 1,
 
-  getRegisterableUserId: () =>
-    Math.floor(Math.random() * REGISTERABLE_USERS_RANGE) + REGISTERABLE_USERS_MIN,
+  getRegisterableUserId: registerableUserId,
+
+  getRegisterableUser: () =>
+    registeredUserMocks[registerableUserId()],
 
   registeredUserMocks,
   validSignupData,

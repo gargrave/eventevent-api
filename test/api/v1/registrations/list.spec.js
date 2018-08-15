@@ -1,13 +1,13 @@
 const Code = require('code');
 const Lab = require('lab');
 
-const { before, describe, it } = exports.lab = Lab.script(); // eslint-disable-line
+const { describe, it } = exports.lab = Lab.script(); // eslint-disable-line
 const { expect } = Code;
 
-const { registeredUserMocks } = require('../../../../db/mocks/auth');
+const { getRegisterableUser } = require('../../../../db/mocks/auth');
 const API = require('../../../apiWrapper');
 
-const firstUser = { ...registeredUserMocks[0], password: 'password' };
+const firstUser = { ...getRegisterableUser(), password: 'password' };
 const path = '/registrations';
 
 describe('API Route: GET Registrations -> List', () => {
@@ -31,8 +31,34 @@ describe('API Route: GET Registrations -> List', () => {
       expect(token).not.to.be.undefined();
     });
 
-    it('correctly fetches the current user\'s registrations');
+    it('correctly fetches only the current user\'s registrations', async() => {
+      const res = await API.get(path, token);
+      const { registrations } = res.data;
+      const unownedRegistrations = registrations.filter(
+        r => r.user_id !== user.id,
+      );
 
-    it('includes the correct data with the registrations');
+      expect(res.statusCode).to.equal(200);
+      expect(registrations).to.be.an.array();
+      expect(registrations.length).to.be.above(0);
+      expect(unownedRegistrations.length).to.equal(0);
+    });
+
+    it('includes the correct data with the registrations', async() => {
+      const res = await API.get(path, token);
+      const { registrations } = res.data;
+      const [firstReg] = registrations;
+
+      expect(res.statusCode).to.equal(200);
+      expect(registrations).to.be.an.array();
+      expect(firstReg.user_id).to.be.a.number();
+      expect(firstReg.id).to.be.a.number();
+      expect(firstReg.registered_at).to.be.a.string();
+      // check the embedded event data
+      expect(firstReg.event.id).to.be.a.number();
+      expect(firstReg.event).to.be.an.object();
+      expect(firstReg.event.date).to.be.a.string();
+      expect(firstReg.event.title).to.be.a.string();
+    });
   });
 });

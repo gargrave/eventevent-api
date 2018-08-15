@@ -14,11 +14,13 @@ const data = [
   ...randomEvents(faker.lorem.sentence, 20),
 ];
 
+const safeEventId = () =>
+  Math.max(1, Math.floor(Math.random() * data.length));
+
 module.exports = {
   data,
 
-  getRandomEventId: () =>
-    Math.floor(Math.random() * data.length),
+  getRandomEventId: safeEventId,
 
   randomLoremEvent: () =>
     randomEvents(faker.lorem.sentence, 1)[0],
