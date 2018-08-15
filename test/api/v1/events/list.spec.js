@@ -5,6 +5,7 @@ const { before, describe, it } = exports.lab = Lab.script(); // eslint-disable-l
 const { expect } = Code;
 
 const { registeredUserMocks } = require('../../../../db/mocks/auth');
+const { findUnownedEvents } = require('../../../../db/mocks/events');
 const API = require('../../../apiWrapper');
 
 const firstUser = { ...registeredUserMocks[0], password: 'password' };
@@ -35,9 +36,9 @@ describe('API Route: GET Events -> List', () => {
       const res = await API.get(path, token);
       expect(res.statusCode).to.equal(200);
       const { events } = res.data;
-      const unownedEvents = events.filter(e => e.ownerId === user.id);
+      const unownedEvents = events.filter(e => e.owner_id !== user.id);
       expect(events).to.be.an.array();
-      expect(events.length).to.be.above(1);
+      expect(events.length).to.be.above(0);
       expect(unownedEvents.length).to.equal(0);
     });
 
@@ -46,11 +47,11 @@ describe('API Route: GET Events -> List', () => {
       const { events } = res.data;
       const [event] = events;
       expect(event.id).to.be.a.number();
+      expect(event.owner_id).to.be.a.number();
       expect(event.title).to.be.a.string();
       expect(event.date).to.be.a.string();
       expect(event.created_at).to.be.a.string();
       expect(event.updated_at).to.be.a.string();
-      expect(event.owner_id).to.be.undefined();
     });
   });
 });

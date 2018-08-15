@@ -48,11 +48,11 @@ describe('API Route: GET Event -> Detail', () => {
       const res = await API.get(`${path}/${ownedEvent.id}`, token);
       const { event } = res.data;
       expect(event.id).to.be.a.number();
+      expect(event.owner_id).to.be.a.number();
       expect(event.title).to.be.a.string();
       expect(event.date).to.be.a.string();
       expect(event.created_at).to.be.a.string();
       expect(event.updated_at).to.be.a.string();
-      expect(event.owner_id).to.be.undefined();
     });
 
     it('responds with a 404 if no object matches ID', async() => {

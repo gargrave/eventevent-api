@@ -38,8 +38,8 @@ describe('API Route: Put | PATCH Event -> Update', () => {
         expect(error).to.equal(null);
         expect(value).to.be.an.object();
 
-        expect(updated.owner_id).to.be.undefined();
         expect(event.id).to.be.a.number(ownedEvent.id);
+        expect(event.owner_id).to.be.a.number();
         expect(updated.title).to.equal(event.title);
         expect(updated.title).not.to.equal(ownedEvent.title);
         expect(updated.date).to.equal(ownedEvent.date);

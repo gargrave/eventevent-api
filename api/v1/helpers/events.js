@@ -1,6 +1,10 @@
 module.exports = {
   eventsSelectFields: [
-    'id', 'title', 'date',
-    'created_at', 'updated_at',
+    'id',
+    'owner_id',
+    'title',
+    'date',
+    'created_at',
+    'updated_at',
   ],
 };
