@@ -1847,9 +1847,9 @@ knex@^0.14.6:
     uuid "^3.2.1"
     v8flags "^3.0.2"
 
-lab@^15.4.4:
-  version "15.4.4"
-  resolved "https://registry.yarnpkg.com/lab/-/lab-15.4.4.tgz#9a6a5a946f7e2fe83f8b49198a7c3f1d6ba422ea"
+lab@^15.5.0:
+  version "15.5.0"
+  resolved "https://registry.yarnpkg.com/lab/-/lab-15.5.0.tgz#13908f004ba1517650a4a7c38be29eee476adf97"
   dependencies:
     bossy "4.x.x"
     diff "3.5.x"
@@ -2149,9 +2149,9 @@ node-pre-gyp@^0.9.0:
     semver "^5.3.0"
     tar "^4"
 
-nodemon@^1.17.4:
-  version "1.17.4"
-  resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.17.4.tgz#243ff9c69ffbf1175f2460f9b023f35a072c15e9"
+nodemon@^1.18.3:
+  version "1.18.3"
+  resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.18.3.tgz#46e681ee0dd1b590562e03019b4c5df234f906f9"
   dependencies:
     chokidar "^2.0.2"
     debug "^3.1.0"
