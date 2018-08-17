@@ -5,8 +5,8 @@ exports.up = (knex, Promise) =>
   knex.schema.createTable(tables.registrations, (table) => {
     table.increments('id');
 
-    table.integer('user_id').notNullable();
-    table.foreign('user_id')
+    table.integer('owner_id').notNullable();
+    table.foreign('owner_id')
       .references(`${tables.users}.id`)
       .onDelete('CASCADE');
 
@@ -17,7 +17,7 @@ exports.up = (knex, Promise) =>
 
     table.timestamps(true, true);
 
-    table.unique(['user_id', 'event_id']);
+    table.unique(['owner_id', 'event_id']);
   });
 
 exports.down = (knex, Promise) =>

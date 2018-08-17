@@ -35,7 +35,7 @@ describe('API Route: GET Registrations -> List', () => {
       const res = await API.get(path, token);
       const { registrations } = res.data;
       const unownedRegistrations = registrations.filter(
-        r => r.user_id !== user.id,
+        r => r.owner_id !== user.id,
       );
 
       expect(res.statusCode).to.equal(200);
@@ -51,7 +51,7 @@ describe('API Route: GET Registrations -> List', () => {
 
       expect(res.statusCode).to.equal(200);
       expect(registrations).to.be.an.array();
-      expect(firstReg.user_id).to.be.a.number();
+      expect(firstReg.owner_id).to.be.a.number();
       expect(firstReg.id).to.be.a.number();
       expect(firstReg.registered_at).to.be.a.string();
       // check the embedded event data

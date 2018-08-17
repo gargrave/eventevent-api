@@ -1,3 +1,5 @@
+const Boom = require('boom');
+
 const { apiUrl } = require('../../config');
 const { getOwnerId } = require('../../helpers/common');
 const { registrationsSelectFields } = require('../../helpers/registrations');
@@ -6,8 +8,8 @@ const { listWithJoinQuery } = require('../../queries');
 const parseEventData = queryResult =>
   queryResult.reduce((accum, value) =>
     accum.concat({
-      id: value.registration_id,
-      user_id: value.user_id,
+      id: value.id,
+      owner_id: value.owner_id,
       registered_at: value.registered_at,
       event: {
         id: value.event_id,
@@ -22,7 +24,7 @@ module.exports = {
 
   path: apiUrl('/registrations'),
 
-  handler: async(request) => {
+  handler: async(request, h) => {
     const ownerId = getOwnerId(request);
     const params = {
       innerJoin: ['events', 'registrations.id', 'events.id'],
@@ -30,10 +32,17 @@ module.exports = {
       ownerId,
       select: registrationsSelectFields,
       table: 'registrations',
-      where: { user_id: ownerId },
+      where: { 'registrations.owner_id': ownerId },
     };
-    const queryResult = await listWithJoinQuery(params);
-    return { data: { registrations: parseEventData(queryResult) } };
+
+    try {
+      const queryResult = await listWithJoinQuery(params);
+      return { data: { registrations: parseEventData(queryResult) } };
+    } catch (err) {
+      console.log(err); // eslint-disable-line
+      const error = Boom.internal().output.payload;
+      return h.response({ data: { error } }).code(500);
+    }
   },
 
   options: {
